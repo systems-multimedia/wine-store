@@ -1,0 +1,9 @@
+<section class="header">
+  <div class="container">
+    <h1>El Viñedo</h1>
+    <div id="form-container">
+      <input type="text" name="search_term" placeholder="search" [(ngModel)]="search_term" (change)="search(search_term)">
+    </div>
+  </div>
+</section>
+<router-outlet></router-outlet>
