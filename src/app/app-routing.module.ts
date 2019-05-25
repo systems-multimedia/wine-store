@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: 'product/licores', component: LicoresComponent, data: { title: 'Licores' }, pathMatch: 'full' },
       { path: 'products/embutidos', component: EmbutidosComponent, data: { title: 'Embutidos' } },
       { path: 'products/:kind/id/:id', component: ProductoComponent, data: { title: ':kind' } },
-      { path: 'products/search/:name', component: SearchComponent, data: { title: 'Búsqueda :name' } }
+      { path: 'products/:range/search/:name', component: SearchComponent, data: { title: 'Búsqueda :name' } }
     ]
   },
 ];

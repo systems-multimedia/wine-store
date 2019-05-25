@@ -6,7 +6,7 @@ $color: (
 );
 
 @function color($map) {
-    @return map-get($map: $color, $key: $map)
+    @return map-get($map: $color, $key: $map);
 }
 
 .header {
