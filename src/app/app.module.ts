@@ -9,10 +9,9 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { UserServiceService } from './service/user-service.service';
 import { ProductService } from './service/product.service';
-import { LicoresComponent } from './components/licores/licores.component';
-import { EmbutidosComponent } from './components/embutidos/embutidos.component';
 import { ProductoComponent } from './components/producto/producto.component';
 import { ProductosComponent } from './components/productos/productos.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -20,10 +19,9 @@ import { ProductosComponent } from './components/productos/productos.component';
     HomeComponent,
     NavBarComponent,
     FooterComponent,
-    LicoresComponent,
-    EmbutidosComponent,
     ProductoComponent,
-    ProductosComponent
+    ProductosComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

@@ -5,9 +5,9 @@
       <label for="sort">Sort by</label>
       <input type="checkbox" name="sort" id="sort" class="block--invisible">
       <div id="_sort">
-        <label for="sort"><li>Todo</li></label> 
-        <label for="sort"><li>Embutidos</li></label> 
-        <label for="sort"><li>Licores</li></label>
+        <label for="sort" class="sort_option"><li>Todo</li></label> 
+        <label for="sort" class="sort_option"><li>Embutidos</li></label> 
+        <label for="sort" class="sort_option"><li>Licores</li></label>
       </div>
       <input type="text" name="search_term" placeholder="search" [(ngModel)]="search_term"
         (change)="search(search_term)">
