@@ -1,0 +1,12 @@
+<section class="app">
+  <div class="container">
+    <div *ngIf="products | async as prods">
+      <div *ngIf="prods.length > 0; else notFound">
+        <li *ngFor="let product of prods">{{product.name}}</li>
+      </div>
+      <ng-template #notFound>
+        No hay productos encontrados
+      </ng-template>
+    </div>
+  </div>
+</section>

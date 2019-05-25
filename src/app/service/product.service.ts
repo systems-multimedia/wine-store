@@ -38,7 +38,7 @@ export class ProductService {
       offer: 0,
       id: 2,
       image: 'https://i2.wp.com/thewine.com.uy/wp-content/uploads/2018/10/vin_imp-cat_zap-f06.jpg?fit=450%2C450',
-      tags: 'Catena Zapata, Vinos, Vinos Importados'.split(', '),
+      tags: 'Catena Zapata, Vinos, Vinos Importados, vino'.split(', '),
       origin: 'argetina',
       quant: 750
     },
@@ -50,7 +50,7 @@ export class ProductService {
       offer: 12,
       id: 3,
       image: 'https://i2.wp.com/thewine.com.uy/wp-content/uploads/2018/10/vin_imp-cat_zap-f06.jpg?fit=450%2C450',
-      tags: 'Catena Zapata, Vinos, Vinos Importados'.split(', '),
+      tags: 'Catena Zapata, Vinos, Vinos Importados, vino'.split(', '),
       origin: 'argetina',
       quant: 750
     },
@@ -62,7 +62,7 @@ export class ProductService {
       offer: 0,
       id: 4,
       image: 'https://i2.wp.com/thewine.com.uy/wp-content/uploads/2018/10/vin_imp-cat_zap-f08.jpg?fit=750%2C750',
-      tags: 'Catena Zapata, Vinos, Vinos Importados'.split(', '),
+      tags: 'Catena Zapata, Vinos, Vinos Importados, vino'.split(', '),
       origin: 'argetina',
       quant: 750
     },
@@ -74,7 +74,7 @@ export class ProductService {
       offer: 8,
       id: 5,
       image: 'https://i2.wp.com/thewine.com.uy/wp-content/uploads/2018/10/vin_imp-cat_zap-f07.jpg?fit=750%2C750',
-      tags: 'Catena Zapata, Vinos, Vinos Importados'.split(', '),
+      tags: 'Catena Zapata, Vinos, Vinos Importados, vino'.split(', '),
       origin: 'argetina',
       quant: 750
     },
@@ -86,7 +86,7 @@ export class ProductService {
       offer: 18,
       id: 6,
       image: 'https://i0.wp.com/thewine.com.uy/wp-content/uploads/2018/08/vin_nac-h_sta-f06.jpg?fit=750%2C750',
-      tags: 'H. Stagnari, Vinos Nacionales, Dinastia, Tinto'.split(', '),
+      tags: 'H. Stagnari, Vinos Nacionales, Dinastia, Tinto, vino'.split(', '),
       origin: 'uruguay',
       quant: 750
     },
@@ -98,7 +98,7 @@ export class ProductService {
       offer: 0,
       id: 7,
       image: 'https://i2.wp.com/thewine.com.uy/wp-content/uploads/2018/10/vin_imp-cat_zap-f06.jpg?fit=450%2C450',
-      tags: 'Gimenez Mendez, Vinos Nacionales, Malbec Rosé, Rosado'.split(', '),
+      tags: 'Gimenez Mendez, Vinos Nacionales, Malbec Rosé, Rosado, vino'.split(', '),
       origin: 'uruguay',
       quant: 750
     },
@@ -190,24 +190,136 @@ export class ProductService {
   }
 
   listProduct(term: string): Observable<Product[]> {
+    console.log(term)
     const list: Product[] = [];
-    this.products.forEach(product => {
-      if ((product.name + '\ufaff') === (term + '\ufaff')) {
-        list.push(product);
-      } else if ((product.type + '\ufaff') === (term + '\ufaff')) {
-        list.push(product);
-      } else {
-        product.tags.forEach(tag => {
-          if ((tag + '\ufaff') === (term + '\ufaff')) {
-            list.push(product);
-          }
-        })
-      }
-    })
+    let added: boolean = false;
+    this.getProducts().subscribe(products => {
 
-    if(list.length >  1) {
-      return of(list);
-    }
-    return of(null);
+      // products.forEach(product => {
+      //   added = false;
+      //   term.toLowerCase().split(' ').forEach(nm => {
+      //     if (added === false) {
+      //       if (product.name.toLowerCase().split(nm).length > 0) {
+      //         list.push(product);
+      //         added = true;
+      //       } else if (product.origin.toLowerCase().split(nm).length > 0) {
+      //         list.push(product);
+      //         added = true;
+      //       } else if (product.type.toLowerCase().split(nm).length > 0) {
+      //         list.push(product);
+      //         added = true;
+      //       } else {
+      //         product.tags.forEach(tag => {
+      //           if (tag.toLowerCase().split(nm).length > 0) {
+      //             list.push(product);
+      //             added = true;
+      //           }
+      //         })
+      //       }
+      //     }
+
+      //   })
+      // })
+
+      products.forEach(product => {
+        added = false;
+        // term.toLowerCase().split(' ').forEach(nm => {
+        //   if (added === false) {
+        //     if(product.name.toLowerCase().split(''+nm).length > 0) {
+        //       list.push(product);
+        //       added = true;
+        //     }
+        //   }
+        // })
+        term.toLowerCase().split(' ').forEach(nm => {
+          if (added === false) {
+            if (nm === product.type.toLowerCase()) {
+              list.push(product);
+              added = true;
+            }
+          }
+        });
+        product.name.toLowerCase().split(' ').forEach(word => {
+          term.toLowerCase().split(' ').forEach(nm => {
+            if (added === false) {
+              if (nm === word) {
+                list.push(product);
+                added = true;
+              }
+            }
+          })
+        });
+        product.tags.forEach(tag => {
+          tag.toLowerCase().split(' ').forEach(word => {
+            term.toLowerCase().split(' ').forEach(nm => {
+              if (added === false) {
+                if (word === nm) {
+                  list.push(product);
+                  added = true;
+                }
+              }
+            })
+          })
+        });
+        if (product.origin) {
+          if (added === false) {
+            product.origin.toLowerCase().split(' ').forEach(word => {
+              term.toLowerCase().split(' ').forEach(nm => {
+                if (nm.toLowerCase() === word.toLowerCase()) {
+                  list.push(product);
+                  added = true;
+                }
+              })
+            })
+          }
+        }
+      })
+    })
+    // this.getProducts().subscribe(products => {
+    //   products.forEach(product => {
+    //     let words = product.name.split(' ');
+    //     let added: boolean = false;
+    //     term.toLowerCase().split(' ').forEach(nm => {
+    //       words.forEach(word => {
+    //         if (nm === word.toLowerCase()) {
+    //           list.push(product);
+    //           added = true;
+    //         }
+    //       });
+
+    //       product.tags.forEach(tag => {
+    //         if (added === false) {
+    //           tag.split(' ').forEach(wrd => {
+    //             if (nm === wrd.toLowerCase()) {
+    //               list.push(product);
+    //               added = true;
+    //             }
+    //             else if (wrd.toLowerCase().split(nm)) {
+    //               list.push(product);
+    //               added = true;
+    //             }
+    //           })
+    //         }
+    //       })
+    //     })
+    //   })
+    // });
+
+    // this.products.forEach(product => {
+    //   if ((product.name.toUpperCase()) === term.toUpperCase()) {
+    //     list.push(product);
+    //   }
+    //   // else if ((product.type + '\ufaff') === (term + '\ufaff')) {
+    //   //   list.push(product);
+    //   // } else {
+    //   //   product.tags.forEach(tag => {
+    //   //     if ((tag + '\ufaff') === (term + '\ufaff')) {
+    //   //       list.push(product);
+    //   //     }
+    //   //   })
+    //   // }
+    // })
+
+    return of(list);
   }
 }

@@ -12,6 +12,7 @@ import { ProductService } from './service/product.service';
 import { LicoresComponent } from './components/licores/licores.component';
 import { EmbutidosComponent } from './components/embutidos/embutidos.component';
 import { ProductoComponent } from './components/producto/producto.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProductoComponent } from './components/producto/producto.component';
     FooterComponent,
     LicoresComponent,
     EmbutidosComponent,
-    ProductoComponent
+    ProductoComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
