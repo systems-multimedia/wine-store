@@ -1,9 +1,18 @@
 <section class="header">
   <div class="container">
-    <h1>El Viñedo</h1>
+    <h1><a routerLink="/home">Store</a></h1>
     <div id="form-container">
-      <input type="text" name="search_term" placeholder="search" [(ngModel)]="search_term" (change)="search(search_term)">
+      <label for="sort">Sort by</label>
+      <input type="checkbox" name="sort" id="sort" class="block--invisible">
+      <div id="_sort">
+        <label for="sort"><li>Todo</li></label> 
+        <label for="sort"><li>Embutidos</li></label> 
+        <label for="sort"><li>Licores</li></label>
+      </div>
+      <input type="text" name="search_term" placeholder="search" [(ngModel)]="search_term"
+        (change)="search(search_term)">
     </div>
+    <div id="user"><a routerLink="">username</a></div>
   </div>
 </section>
 <router-outlet></router-outlet>

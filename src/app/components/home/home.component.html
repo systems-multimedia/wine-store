@@ -1,3 +1,17 @@
-<p>
-  home works!
-</p>
+<section class="app">
+  <section class="banner">
+    <div class="arrow" (click)="slideLeft()"><i class="fa fa-angle-left"></i></div>
+    <div class="arrow" (click)="slideRight()"><i class="fa fa-angle-right"></i></div>
+    <section class="carousel">
+      <div class="carousel-img" *ngFor="let product of products | async">
+        <a [routerLink]="['/products', product.type, 'id', product.id]"><img [src]="product.image" alt=""></a> 
+      </div>
+    </section>
+  </section>
+
+  <div id="wrap">
+    <h1>Catálogo</h1>
+    <a routerLink="/embutidos">Embutidos</a>
+    <a routerLink="/licores">Licores</a>
+  </div>
+</section>

@@ -6,19 +6,29 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { UserServiceService } from './service/user-service.service';
+import { ProductService } from './service/product.service';
+import { LicoresComponent } from './components/licores/licores.component';
+import { EmbutidosComponent } from './components/embutidos/embutidos.component';
+import { ProductoComponent } from './components/producto/producto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    FooterComponent,
+    LicoresComponent,
+    EmbutidosComponent,
+    ProductoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [UserServiceService, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

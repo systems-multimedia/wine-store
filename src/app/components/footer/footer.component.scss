@@ -1,0 +1,17 @@
+$color: (
+    darken: #222831,
+    dark: #393e46,
+    accent: #d65a31,
+    ligth: #d65a31
+);
+
+@function color($map) {
+    @return map-get($map: $color, $key: $map);
+}
+
+.footer {
+    width: 100%;
+    height: 80px;
+    display: block;
+    background: color(darken);
+}
