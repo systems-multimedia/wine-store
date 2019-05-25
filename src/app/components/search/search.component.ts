@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/model/product';
 import { ProductService, SearchParam } from 'src/app/service/product.service';
@@ -13,11 +13,15 @@ export class SearchComponent implements OnInit {
 
   private searchTerm: string = '';
   private range: string = '';
+  tags: string[];
   searchParams: SearchParam;
+  limit: number = 0;
   products: Observable<Product[]>;
+  type: string = 'todo';
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -25,27 +29,33 @@ export class SearchComponent implements OnInit {
     this.range = this.route.snapshot.params['range'];
     this.products = this.productService.listProduct(this.searchTerm, this.range);
     this.searchParams = this.productService.getSearchParams();
+    this.tags = this.searchParams.tags;
+  }
 
-    // const tags = document.getElementsByClassName('tag');
-    // for(let i = 0; i< tags.length; i++) {
-    //   tags[i].addEventListener('click', () => {
-    //     alert(this.searchParams.tags[i]);
-    //   })
-    // }
-    console.log(this.searchParams);
-    // console.log(this.searchTerm);
+  getTags() {
+    return this.tags.sort();
   }
 
   filter(filter: string, num: number) {
     switch (filter) {
       case 'tag':
-        console.log(this.searchParams.tags[num]);
+        this.router.navigate([`products/${this.range}/search/${this.searchParams.tags[num]}`]).then(() => {
+          if (window.location.pathname.split('search').length > 0) {
+            window.location.reload();
+          }
+        })
         break;
       case 'price':
-        console.log(num);
+        this.limit = num;
+        console.log(this.limit);
         break;
       case 'category':
-        console.log(this.searchParams.kind[num]);
+        // this.type = this.searchParams.kind[num].toLowerCase();
+        this.router.navigate([`products/${this.searchParams.kind[num]}/search/${this.searchTerm}`]).then(() => {
+          if (window.location.pathname.split('search').length > 0) {
+            window.location.reload();
+          }
+        })
         break;
     }
   }
