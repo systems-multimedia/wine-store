@@ -5,6 +5,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ProductoComponent } from './components/producto/producto.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { SearchComponent } from './components/search/search.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes: Routes = [
       // { path: 'products/embutidos', component: EmbutidosComponent, data: { title: 'Embutidos' } },
       { path: 'products/:kind', component: ProductosComponent, data: { title: ':kind' } },
       { path: 'products/:kind/id/:id', component: ProductoComponent, data: { title: ':kind' } },
-      { path: 'products/:range/search/:name', component: SearchComponent, data: { title: 'Búsqueda :name' } }
+      { path: 'products/:range/search/:name', component: SearchComponent, data: { title: 'Búsqueda :name' } },
+      { path: '**', component: NotFoundComponent, data: { title: '404 | Error' } }
     ]
   },
 ];
