@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="checkout">
-        <h1 class="price">{{prod.price | currency}}</h1>
+        <h1 class="price">{{prod.price - ((prod.price * prod.offer) / 100) | currency}}</h1>
         <h4 class="deliver">Envío: {{prod.deliver | currency}}</h4>
         <label>
           <h2>Comprar</h2>

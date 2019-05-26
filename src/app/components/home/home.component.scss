@@ -15,6 +15,10 @@ $color: (
     display: block;
     position: relative;
 
+    &.carousel {
+        height: 500px;
+    }
+
     .arrow {
         width: 50px;
         height: 50px;
@@ -78,14 +82,15 @@ $color: (
 #wrap {
     width: 100%;
     max-width: 800px;
-    height: 200px;
+    min-height: 200px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     margin: 20px auto;
     h1 {
-        width: 180px;
+        width: 100%;
+        height: 30pt;
         margin: 20px auto;
         text-align: center;
         color: color(dark);
@@ -98,8 +103,8 @@ $color: (
     a {
         width: 150px;
         height: 50px;
-        display: block;
-        margin: auto;
+        display: inline-block;
+        margin: 10px auto;
         text-align: center;
         // background: color(dark);
         color: color(dark);
@@ -113,6 +118,91 @@ $color: (
 
         &:nth-child(2) {
             margin-bottom: 10px;
+        }
+    }
+}
+
+#offers {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: hidden;
+    position: relative;
+    // justify-content: center;
+
+    article {
+        width: 25%;
+        min-width: 300px;
+        min-height: 350px;
+        display: inline-block;
+        margin: 10px 15px;
+        // padding-bottom: 10px;
+        transition: 0.2s;
+
+        &.block--invisible {
+            display: none;
+        }
+
+        .cover {
+            width: 100%;
+            height: 280px;
+            display: block;
+            position: relative;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                position: absolute;
+                margin: auto;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                vertical-align: baseline;
+            }
+
+            h1 {
+                width: 60px;
+                height: 60px;
+                color: white;
+                background: color(accent);
+                display: block;
+                padding: 10px 0;
+                padding-top: 16px;
+                text-align: center;
+                z-index: 3;
+                position: absolute;
+                border-radius: 100%;
+                right: 15px;
+                top: 0;
+            }
+        }
+
+        .info {
+            width: 100%;
+            height: 70px;
+
+            h1 {
+                width: 100%;
+                text-align: center;
+                margin: 10px auto;
+
+                a {
+                    color: color(dark);
+                }
+            }
+
+            h3 {
+                width: 100%;
+                text-align: center;
+                color: color(accent);
+            }
+        }
+        &:hover {
+            border-left: 2px solid color(accent);
+            border-right: 2px solid color(accent);
         }
     }
 }

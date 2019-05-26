@@ -1,17 +1,37 @@
 <section class="app">
   <section class="banner">
-    <div class="arrow" (click)="slideLeft()"><i class="fa fa-angle-left"></i></div>
-    <div class="arrow" (click)="slideRight()"><i class="fa fa-angle-right"></i></div>
+    <div class="arrow" (click)="slideLeft('carousel-img')"><i class="fa fa-angle-left"></i></div>
+    <div class="arrow" (click)="slideRight('carousel-img')"><i class="fa fa-angle-right"></i></div>
     <section class="carousel">
       <div class="carousel-img" *ngFor="let product of products | async">
-        <a [routerLink]="['/products', product.type, 'id', product.id]"><img [src]="product.image" alt=""></a> 
+        <a [routerLink]="['/products', product.type, 'id', product.id]"><img [src]="product.image" alt=""></a>
       </div>
     </section>
   </section>
 
   <div id="wrap">
     <h1>Catálogo</h1>
-    <a routerLink="/embutidos">Embutidos</a>
-    <a routerLink="/licores">Licores</a>
+    <a *ngFor="let section of sections" [routerLink]="['/products', section]">{{section}}</a>
+    <!-- <a routerLink="/embutidos">Embutidos</a>
+    <a routerLink="/licores">Licores</a> -->
+  </div>
+
+  <div class="banner carousel">
+    <div id="offers" *ngIf="offers | async as deals">
+      <div class="arrow" (click)="slideLeft('product-carousel')"><i class="fa fa-angle-left"></i></div>
+      <div class="arrow" (click)="slideRight('product-carousel')"><i class="fa fa-angle-right"></i></div>
+      <article *ngFor="let product of offers | async" class="product-carousel">
+        <div class="cover">
+          <a [routerLink]="['/products', product.type, 'id', product.id]">
+            <img [src]="product.image" alt="">
+          </a>
+          <h1 *ngIf="product.offer > 0">-{{product.offer}}%</h1>
+        </div>
+        <div class="info">
+          <h1><a [routerLink]="['/products', product.type, 'id', product.id]">{{product.name}}</a></h1>
+          <h3>{{product.price - ((product.price * product.offer) / 100) | currency}}</h3>
+        </div>
+      </article>
+    </div>
   </div>
 </section>

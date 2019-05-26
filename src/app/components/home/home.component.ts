@@ -11,34 +11,60 @@ import { ProductService } from 'src/app/service/product.service';
 export class HomeComponent implements OnInit {
 
   products: Observable<Product[]>;
+  offers: Observable<Product[]>;
+  sections: string[];
   x: number = 0;
+  y: number = 0;
   constructor(
-    private productsService: ProductService
+    private productService: ProductService
   ) { }
 
   ngOnInit() {
-    this.products = this.productsService.getProducts();
+    this.products = this.productService.getProducts();
+    this.offers = this.productService.getOffers();
+    this.sections = this.productService.getSections();
   }
 
-  slideLeft() {
-    console.log('izquierda')
-    if(this.x < 0) {
-      this.x += 100;
-      this.slide();
+  slideLeft(className: string) {
+    // console.log('izquierda')
+    switch (className) {
+      case 'product-carousel':
+        if (this.y < 0) {
+          this.y += 100;
+          this.slide(className, this.y);
+        }
+        break;
+      default:
+        if (this.x < 0) {
+          this.x += 100;
+          this.slide(className, this.x);
+        }
+        break;
     }
   }
-
-  slideRight() {
-    const images = document.getElementsByClassName('carousel-img');
-    if(this.x > (images.length - 1) * -100) {
-      this.x -= 100;
-      this.slide();
+  slideRight(className: string) {
+    const images = document.getElementsByClassName(className);
+    switch (className) {
+      case 'product-carousel':
+        if (images[images.length - 1].getBoundingClientRect().right >= (window.innerWidth - 35)) {
+          this.y -= 100;
+          this.slide(className, this.y);
+        }
+        break;
+      default:
+        if (this.x > (images.length - 1)*-100) {
+          this.x -= 100;
+          this.slide(className, this.x);
+        }
+        break;
     }
+    // if ((this.x > (images.length - 1) * -100 && className !== 'product-carousel') || (className === 'product-carousel' && (images[images.length - 1].getBoundingClientRect().right >= (window.innerWidth - 35)))) {
+    // }
   }
-  private slide() {
-    const images = document.getElementsByClassName('carousel-img');
-    for(let i = 0; i < images.length; i++) {
-      images[i].setAttribute('style', `transform: translateX(${this.x}%)`);
+  private slide(className: string, distance: number) {
+    const images = document.getElementsByClassName(className);
+    for (let i = 0; i < images.length; i++) {
+      images[i].setAttribute('style', `transform: translateX(${distance}%)`);
     }
   }
 

@@ -263,8 +263,8 @@ export class ProductService {
 
   getProduct(id: string): Observable<Product> {
     let product: Product;
-    for(let i = 0; i < this.products.length; i++) {
-      if(this.products[i].id === id) {
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].id === id) {
         product = this.products[i];
       }
     }
@@ -273,6 +273,37 @@ export class ProductService {
 
   getProducts(): Observable<Product[]> {
     return of(this.products);
+  }
+
+  getSection(section: string): Observable<Product[]> {
+    let list: Product[] = [];
+    this.getProducts().subscribe(products => {
+      products.forEach(product => {
+        if(section.toLowerCase() === product.type.toLowerCase()) {
+          list.push(product);
+        }
+      })
+    });
+    return of(list);
+  }
+
+  getSections(): string[] {
+    let sections: string[];
+    this.getProducts().subscribe(products => {
+      sections = [products[0].type.toLowerCase()];
+      products.forEach(product => {
+        let count: number = 0;
+        sections.forEach(section => {
+          if(section.toLowerCase() === product.type.toLowerCase()) {
+            count++;
+          }
+        });
+        if(count === 0) {
+          sections.push(product.type.toLowerCase());
+        }
+      })
+    })
+    return sections;
   }
 
   listProduct(term: string, range: string): Observable<Product[]> {
@@ -375,10 +406,23 @@ export class ProductService {
     return of(list);
   }
 
+
   private setSearchParams(options?: SearchParam): void {
     this.search_Params = options;
   }
   getSearchParams(): SearchParam {
     return this.search_Params;
+  }
+  getOffers(): Observable<Product[]> {
+    let list: Product[] = [];
+    this.getProducts().subscribe(products => {
+      products.forEach(product => {
+        if (product.offer > 0) {
+          list.push(product);
+        }
+      })
+    })
+
+    return of(list);
   }
 }
