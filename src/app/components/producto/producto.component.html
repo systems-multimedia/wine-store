@@ -1,0 +1,59 @@
+<section class="app">
+  <div class="container">
+    <section id="product" *ngIf="product | async as prod; else error">
+      <div class="cover">
+        <img [src]="prod.image" [alt]="prod.name">
+      </div>
+      <div class="desc">
+        <h1 id="title">{{prod.name}}</h1>
+        <h3 class="price">{{prod.price - ((prod.price * prod.offer) / 100) | currency}}</h3>
+        <h6 id="offer" *ngIf="prod.offer > 0">Descuento: {{prod.offer}}%</h6>
+        <h5 class="deliver" *ngIf="prod.deliver > 0">Envío: {{prod.deliver | currency}}</h5>
+        <h2 id="quant" *ngIf="prod.quant">Presentación: {{prod.quant}}{{prod.unit}}</h2>
+        <!-- <h6 id="tags">
+          <li *ngFor="let tag of tags"> <a [routerLink]="['/products', prod.type, 'search', tag]">{{tag}}</a></li>
+        </h6> -->
+        <h4>Calificación</h4>
+        <div id="rating">
+          <div class="star" *ngFor="let star of stars" [ngClass]="{'star-full': star === 1, 'star-empty': star === 0}">
+            <i class="fa fa-star"></i>
+          </div>
+        </div>
+      </div>
+      <div class="checkout">
+        <h1 class="price">{{prod.price - ((prod.price * prod.offer) / 100) | currency}}</h1>
+        <h4 class="deliver">Envío: {{prod.deliver | currency}}</h4>
+        <label>
+          <h2>Comprar</h2>
+        </label>
+        <input type="number" name="quant" id="quant" [(ngModel)]="quant" min="1" [max]="prod.available">
+        <button type="button" (click)="checkout(prod)">Añadir a la Cesta <i class="fa fa-shopping-basket"></i></button>
+      </div>
+      <section id="reviews">
+        <h1 id="reviews-title">Comentarios</h1>
+        <div id="box" *ngIf="prod.comments; else no_comments">
+          <article *ngFor="let comment of prod.comments">
+            <h3 class="username">{{comment.username}}</h3>
+            <div class="group">
+              <h3 id="punt">Calificación: </h3>
+              <div id="rating">
+                <div class="star" *ngFor="let star of stars"
+                  [ngClass]="{'star-full': star === 1, 'star-empty': star === 0}">
+                  <i class="fa fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <h3 id="comment">Comentario</h3>
+            <div id="message">{{comment.comment}}</div>
+          </article>
+        </div>
+        <ng-template #no_comments>
+          <div id="noComments">
+            <h4>Aún no hay comentarios</h4>
+          </div>
+        </ng-template>
+      </section>
+    </section>
+
+  </div>
+</section>

@@ -1,0 +1,27 @@
+$color: (
+    darken: #222831,
+    dark: #393e46,
+    accent: #d65a31,
+    ligth: #eeeeee
+);
+
+@function color($map) {
+    @return map-get($map: $color, $key: $map);
+}
+
+section#notFound {
+    width: 100%;
+    height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+
+    h1 {
+        width: 100%;
+        font-size: 25pt;
+        color: color(dark);
+        height: 28pt;
+        margin: auto; 
+        text-align: center;
+        display: block;
+    }
+}

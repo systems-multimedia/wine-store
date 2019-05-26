@@ -1,0 +1,40 @@
+<section class="app">
+  <div class="container">
+    <div class="sidebar">
+      <div class="group" *ngIf="searchParams.kind">
+        <h2>Sort by</h2>
+        <li *ngFor="let kind of searchParams.kind; index as i" (click)="filter('category', i)">{{kind}}</li>
+      </div>
+      <div class="group">
+        <h2>Rango</h2>
+        <li *ngIf="searchParams.lower_price < searchParams.max_price"
+          (click)="filter('price', searchParams.lower_price)">Desde {{searchParams.lower_price | currency}}</li>
+        <li *ngIf="searchParams.lower_price < (searchParams.max_price / 2)"
+          (click)="filter('price', searchParams.max_price / 2)">Desde {{searchParams.max_price / 2 | currency}}</li>
+        <li (click)="filter('price', searchParams.max_price)">Hasta {{searchParams.max_price | currency}}</li>
+      </div>
+      <h2>Tags <i class="fa fa-tags"></i></h2>
+      <li *ngFor="let tag of getTags(); index as i" class="tag" (click)="filter('tag', i)">{{tag}}</li>
+    </div>
+    <div *ngIf="products | async as prods" id="list">
+      <div *ngIf="prods.length > 0; else notFound" id="wrap">
+        <article *ngFor="let product of prods"
+          [ngClass]="{'block--invisible': (limit > 0 && product.price > limit) || (type!=='todo' && product.type.toLowerCase() !== type), '': (limit > 0 && product.price <= limit) || (type!=='todo' && product.type.toLowerCase() === type)}">
+          <div class="cover">
+            <a [routerLink]="['/products', product.type, 'id', product.id]">
+              <img [src]="product.image" alt="">
+            </a>
+            <h1 *ngIf="product.offer > 0">-{{product.offer}}%</h1>
+          </div>
+          <div class="info">
+            <h1><a [routerLink]="['/products', product.type, 'id', product.id]">{{product.name}}</a></h1>
+            <h3>{{product.price - ((product.price * product.offer) / 100) | currency}}</h3>
+          </div>
+        </article>
+      </div>
+      <ng-template #notFound>
+        <div id="not-found"><h1>La búsqueda no Coincide con ninguno de nuestros productos</h1></div>
+      </ng-template>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+<section class="app">
+  <div class="container">
+    <div id="wrap">
+      <article *ngFor="let product of products | async">
+        <div class="cover">
+          <a [routerLink]="['/products', product.type, 'id', product.id]">
+            <img [src]="product.image" alt="">
+          </a>
+          <h1 *ngIf="product.offer > 0">-{{product.offer}}%</h1>
+        </div>
+        <div class="info">
+          <h1><a [routerLink]="['/products', product.type, 'id', product.id]">{{product.name}}</a></h1>
+          <h3>{{product.price - ((product.price * product.offer) / 100) | currency}}</h3>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

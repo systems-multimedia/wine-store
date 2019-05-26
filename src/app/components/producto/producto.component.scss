@@ -1,0 +1,235 @@
+$color: (
+    darken: #222831,
+    dark: #393e46,
+    accent: #d65a31,
+    accent_light: #e07e5e,
+    ligth: #eeeeee
+);
+
+@function color($map) {
+    @return map-get($map: $color, $key: $map);
+}
+
+#product {
+    width: 100%;
+    min-height: 340px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px 10px;
+    box-shadow: 1px 3px 2px rgba(0,0,0,0.3);
+
+    .cover {
+        width: 300px;
+        height: 300px;
+        display: inline-block;
+        position: relative;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto; 
+            vertical-align: baseline;
+        }
+    }
+    
+    .price {
+        color: color(accent);
+    }
+
+    .deliver {
+        color: rgb(39, 39, 39);
+        font-weight: lighter;
+    }
+    
+    .desc {
+        width: calc(100% - 550px);
+        min-width: 300px;
+        height: 300px;
+        margin: auto 20px;
+        
+        h1#title {
+            width: 100%;
+            min-height: 30pt;
+            font-size: 25pt;
+            color: color(dark);
+        }
+
+
+        h6#offer {
+            color: color(dark);
+            font-weight: lighter;
+            font-size: 8pt;
+        }
+
+        #quant {
+            color: color(dark);
+            font-size: 14pt;
+        }
+
+        h4 {
+            color: color(dark);
+        }
+
+    }
+    #rating {
+        width: 150px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+
+        .star {
+            display: inline-flex;
+            margin: 7px;
+
+            i {
+                font-size: 14pt;
+                margin: auto;
+            }
+            
+            &-full {
+                i {
+                    color: rgb(255, 196, 0);
+                }
+            }
+            &-empty {
+                i {
+                    color: white;
+                    text-shadow: 1px 2px rgb(255, 196, 0);
+                }
+            }
+        }
+    }
+
+    .checkout {
+        width: 200px;
+        padding-top: 20px;
+        display: block;
+        height: 300px;
+        box-shadow: -2px 0px 1px rgba(0,0,0,0.2);
+        .price {
+            width: 100%;
+            text-align: center;
+            font-size: 20pt;
+        }
+
+        .deliver {
+            width: 100%;
+            text-align: center;
+        }
+
+        label {
+            width: 100%;
+            h2 {
+                margin: 10px auto;
+                text-align: center;
+                font-size: 15pt;
+                color: color(dark);
+                text-transform: uppercase;
+            }
+        }
+
+        input {
+            width: 80%;
+            height: 30pt;
+            font-size: 25pt;
+            // padding-right: 20px;
+            display: block;
+            margin: 10px auto;
+            outline: 0;
+            border-radius: 8px;
+            border: 1px solid silver;
+            color: color(dark);
+            text-align: right;
+        }
+
+        button[type=button] {
+            width: 80%;
+            height: 30pt;
+            font-size: 12pt;
+            display: block;
+            margin: 10px auto;
+            border: 0;
+            background: color(accent);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+
+            &:hover {
+                background: color(accent_light);
+            }
+        }
+
+    }
+    #reviews {
+        width: 100%;
+        min-height: 200px;
+        display: block;
+        padding: 20px 0;
+        margin: 10px auto;
+
+        h1#reviews-title {
+            width: 100%;
+            font-size: 25px;
+            text-align: center;
+            margin: 10px auto;
+            color: color(dark);
+        }
+
+        #box {
+            width: 100%;
+            min-height: 180px;
+            margin: 10px auto;
+
+            article {
+                width: 80%;
+                margin: 10px auto; 
+                min-height: 150px;
+
+                h3.username {
+                    width: 100%;
+                    height: 30pt;
+                    padding: 5px 0;
+                    border-bottom: 0.7px solid rgba(0,0,0,0.3);
+                    color: color(dark);
+                }
+
+                .group {
+                    width: 100%;
+                    margin: 10px auto;
+                    #punt, #rating {
+                        display: inline-block;
+                    }
+
+                    #punt {
+                        color: color(dark);
+                    }
+
+                    #rating {
+                        width: 200px;
+                    }
+                }
+
+                #comment {
+                    width: 100%;
+                    color: color(dark);
+                    margin: 10px auto;
+                }
+            }
+        }
+    }
+
+    #noComments {
+        width: 100%;
+        margin: 20px auto;
+        h4 {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
