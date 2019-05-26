@@ -2,7 +2,7 @@ $color: (
     darken: #222831,
     dark: #393e46,
     accent: #d65a31,
-    ligth: #d65a31
+    ligth: #eeeeee
 );
 
 @function color($map) {
@@ -12,6 +12,45 @@ $color: (
 .footer {
     width: 100%;
     height: 80px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
     background: color(darken);
+
+    h1 {
+        width: 100%;
+        margin: auto;
+        text-align: center;
+        color: color(ligth);
+        font-weight: lighter;
+        font-size: 14pt;
+    }
+
+    nav {
+        width: 80%;
+        display: flex;
+        margin: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        li {
+            width: 120px;
+            display: inline-flex;
+            margin: 10px 6px;
+            transition: 0.2s;
+
+            a {
+                width: 100%;
+                margin: auto;
+                color: color(ligth);
+                font-size: 10pt;
+                text-align: center;
+            }
+
+            &:hover {
+                box-shadow: 0 2px color(accent);
+            }
+        }
+    }
 }

@@ -16,7 +16,21 @@ $color: (
     position: relative;
 
     &.carousel {
-        height: 500px;
+        height: 600px;
+        margin: 20px auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        h1.title {
+            width: 60%;
+            text-align: center;
+            color: color(dark);
+            font-size: 20pt;
+            text-transform: uppercase;
+            margin: 10px auto;
+            font-weight: lighter;
+            border-bottom: 1px solid color(accent);
+        }
     }
 
     .arrow {
@@ -125,11 +139,14 @@ $color: (
 #offers {
     width: 100%;
     height: 100%;
+    max-height: 520px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     overflow: hidden;
     position: relative;
+    align-items: center;
+    margin: auto;
     // justify-content: center;
 
     article {
@@ -137,7 +154,7 @@ $color: (
         min-width: 300px;
         min-height: 350px;
         display: inline-block;
-        margin: 10px 15px;
+        margin: auto 15px;
         // padding-bottom: 10px;
         transition: 0.2s;
 
@@ -182,7 +199,7 @@ $color: (
 
         .info {
             width: 100%;
-            height: 70px;
+            min-height: 70px;
 
             h1 {
                 width: 100%;
@@ -201,8 +218,9 @@ $color: (
             }
         }
         &:hover {
-            border-left: 2px solid color(accent);
-            border-right: 2px solid color(accent);
+            box-shadow: -1px 0 0 color(accent), 1px 0 0 color(accent);
+            // border-left: 2px solid color(accent);
+            // border-right: 2px solid color(accent);
         }
     }
 }

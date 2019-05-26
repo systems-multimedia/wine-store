@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/model/product';
@@ -19,6 +19,7 @@ export class ProductoComponent implements OnInit {
   tags: string[];
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private productService: ProductService
   ) { }
 
@@ -52,6 +53,16 @@ export class ProductoComponent implements OnInit {
 
   check() {
     console.log(this.quant);
+  }
+
+  checkout(prod: Product) {
+    let order = {
+      product: prod,
+      quantity: this.quant
+    }
+    this.quant = 1;
+    this.router.navigate(['/home'])
+    return localStorage.setItem('cartItems', JSON.stringify(order));
   }
 
 }

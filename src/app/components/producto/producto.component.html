@@ -27,7 +27,7 @@
           <h2>Comprar</h2>
         </label>
         <input type="number" name="quant" id="quant" [(ngModel)]="quant" min="1" [max]="prod.available">
-        <button type="button">Añadir a la Cesta <i class="fa fa-shopping-basket"></i></button>
+        <button type="button" (click)="checkout(prod)">Añadir a la Cesta <i class="fa fa-shopping-basket"></i></button>
       </div>
       <section id="reviews">
         <h1 id="reviews-title">Comentarios</h1>
