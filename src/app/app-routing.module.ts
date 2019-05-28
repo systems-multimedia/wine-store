@@ -9,16 +9,19 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { UserGuard } from './auth/user.guard';
 import { LoginComponent } from './auth/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: '', component: NavBarComponent, data: { title: 'Wine Store' }, children: [
       { path: 'home', component: HomeComponent, data: { title: 'Home' }, pathMatch: 'full' },
-      { path: 'products/checkout', component: CheckoutComponent, data: { title: 'Checkout' }, canActivate: [UserGuard] },
+      { path: 'products/checkout', component: CheckoutComponent, data: { title: 'Checkout' } },
       { path: 'products/:kind', component: ProductosComponent, data: { title: ':kind' } },
       { path: 'products/:kind/id/:id', component: ProductoComponent, data: { title: ':kind' } },
       { path: 'products/:range/search/:name', component: SearchComponent, data: { title: 'Búsqueda :name' } },
+      { path: 'my-profile', component: ProfileComponent, data: { title: 'Perfil' }, canActivate: [UserGuard] },
+      { path: 'my-profile/user/:id', component: ProfileComponent, data: { title: 'Perfil' } },
     ]
   },
   { path: 'login', component: LoginComponent, data: { title: 'Inicio de Sesión' } },

@@ -58,11 +58,21 @@ export class ProductoComponent implements OnInit {
   checkout(prod: Product) {
     let order = {
       product: prod,
-      quantity: this.quant
+      quant: this.quant
     }
     this.quant = 1;
     this.router.navigate(['/home'])
-    return localStorage.setItem('cartItems', JSON.stringify(order));
+    let x = {
+      product: {
+        name: 'Vino',
+        price: 500,
+        available: 12
+      },
+      quant: 2
+    }
+    return this.productService.addToCart(order);
+    localStorage.setItem('cartItems', JSON.stringify([x, order]));
+    return console.log(JSON.parse(localStorage.getItem('cartItems')));
   }
 
 }

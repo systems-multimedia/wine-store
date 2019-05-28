@@ -19,6 +19,7 @@ export class AuthService {
   }
 
   isLoggedIn = false;
+  uid: string;
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
@@ -26,7 +27,7 @@ export class AuthService {
   login(): Observable<boolean> {
     return of(true).pipe(
       delay(1000),
-      tap(val => this.isLoggedIn = true)
+      tap(val => {this.isLoggedIn = true})
     );
   }
 
@@ -36,11 +37,12 @@ export class AuthService {
         if (data.email.toLowerCase() === user.email.toLowerCase() && data.password === user.password) {
           return this.login().pipe(
             finalize(() => {
+              this.uid = user.uid;
               if (this.redirectUrl) {
                 this.router.navigate[this.redirectUrl];
               }
             })
-          );
+          ).subscribe();
         } else {
           return of(false);
         }

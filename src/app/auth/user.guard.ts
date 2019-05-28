@@ -20,7 +20,7 @@ export class UserGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    if (this.auth.isLoggedIn) { return true; }
+    if (this.auth.isLoggedIn && this.auth.uid) { return true; }
 
     // Store the attempted URL for redirecting
     this.auth.redirectUrl = url;

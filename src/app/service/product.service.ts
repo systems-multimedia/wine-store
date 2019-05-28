@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../model/product';
 import { Observable, of } from 'rxjs';
+import { UserService } from './user-service.service';
 
 export interface SearchParam {
   lower_price?: number,
@@ -259,7 +260,13 @@ export class ProductService {
 
   private search_Params: SearchParam
 
-  constructor() { }
+  constructor(
+    private user: UserService
+  ) { 
+    if(!JSON.parse(localStorage.getItem('products'))) {
+      localStorage.setItem('products', JSON.stringify(this.products));
+    }
+  }
 
   getProduct(id: string): Observable<Product> {
     let product: Product;
@@ -272,14 +279,14 @@ export class ProductService {
   }
 
   getProducts(): Observable<Product[]> {
-    return of(this.products);
+    return of(JSON.parse(localStorage.getItem('products')));
   }
 
   getSection(section: string): Observable<Product[]> {
     let list: Product[] = [];
     this.getProducts().subscribe(products => {
       products.forEach(product => {
-        if(section.toLowerCase() === product.type.toLowerCase()) {
+        if (section.toLowerCase() === product.type.toLowerCase()) {
           list.push(product);
         }
       })
@@ -294,11 +301,11 @@ export class ProductService {
       products.forEach(product => {
         let count: number = 0;
         sections.forEach(section => {
-          if(section.toLowerCase() === product.type.toLowerCase()) {
+          if (section.toLowerCase() === product.type.toLowerCase()) {
             count++;
           }
         });
-        if(count === 0) {
+        if (count === 0) {
           sections.push(product.type.toLowerCase());
         }
       })
@@ -424,5 +431,23 @@ export class ProductService {
     })
 
     return of(list);
+  }
+
+  addToCart(data: { product: Product, quant: number }) {
+    if (this.user.getUID()) {
+      return this.user.addOrder(data);
+    }
+    let orders = JSON.parse(localStorage.getItem('cartItems'));
+    if (orders) { orders.push(data); } else { orders = [data] }
+    console.log(orders);
+    alert('Producto incluido satisfactoriamente');
+    return localStorage.setItem('cartItems', JSON.stringify(orders));
+  }
+
+  getOrders(): Observable<Array<{
+    product: Product,
+    quant: number
+  }>> {
+    return this.user.getOrders();
   }
 }

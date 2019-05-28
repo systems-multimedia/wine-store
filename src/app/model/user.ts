@@ -7,6 +7,9 @@ export interface User {
     email: string,
     username: string,
     password?: string,
-    products?: Product[],
+    order?: Array<{
+        product: Product,
+        quant: number
+    }>,
     wishList?: Product[]
 }

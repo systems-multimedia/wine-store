@@ -17,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { LoginComponent } from './auth/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoginComponent } from './auth/login/login.component';
     SearchComponent,
     NotFoundComponent,
     CheckoutComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,39 @@
 <section class="app">
   <section class="container">
-    
+    <table>
+      <tr>
+        <th>Producto</th>
+        <th>Status</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Agregar</th>
+        <th>Opciones</th>
+      </tr>
+      <div id="list" *ngIf="orders | async as ordrs; else noOrders">
+        <tr *ngFor="let order of ordrs">
+          <td>
+            <div class="cover">
+              <img [src]="order.product.image" [alt]="order.product.name">
+              <h1>{{order.product.name}}</h1>
+            </div>
+          </td>
+          <td *ngIf="order.product.available > 0; else noDispon">Disponible</td>
+          <ng-template #noDispon>
+            <td>Agotado</td>
+          </ng-template>
+          <td>{{order.product.price - ((order.product.price*order.product.offer)/100) | async}}</td>
+          <td>{{order.quant}}</td>
+          <td>
+            <button type="button"></button>
+          </td>
+          <td>
+            <button type="button"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+      </div>
+      <ng-template #noOrders>
+        <tr>No hay productos añadidos</tr>
+      </ng-template>
+    </table>
   </section>
 </section>
