@@ -2,7 +2,7 @@
     <h1>&copy; Store</h1>
     <nav>
         <li><a routerLink="/home">Inicio</a></li>
-        <li><a routerLink="/home">Mi Cuenta</a></li>
+        <li *ngIf="auth.uid"><a routerLink="/home">Mi Cuenta</a></li>
         <li><a routerLink="/products/checkout">Mis Productos</a></li>
     </nav>
 </section>

@@ -18,16 +18,6 @@ export interface SearchParam {
 
 export class ProductService {
 
-  // name: string,
-  //   type: string,
-  //   price: number,
-  //   available: number,
-  //   offer: number,
-  //   id: string | number,
-  //   image: string | string[],
-  //   tags: string | string[],
-  //   origin?: string,
-  //   quant?: number
   private products: Product[] = [
     {
       name: 'Aberlour Single Malt 12 Años',
@@ -258,12 +248,13 @@ export class ProductService {
     },
   ];
 
-  private search_Params: SearchParam
-
+  private search_Params: SearchParam;
+  private ordersCount: number = 0;
   constructor(
     private user: UserService
-  ) { 
-    if(!JSON.parse(localStorage.getItem('products'))) {
+  ) {
+    // localStorage.setItem('cartItems', '');
+    if (!JSON.parse(localStorage.getItem('products'))) {
       localStorage.setItem('products', JSON.stringify(this.products));
     }
   }
@@ -437,8 +428,32 @@ export class ProductService {
     if (this.user.getUID()) {
       return this.user.addOrder(data);
     }
-    let orders = JSON.parse(localStorage.getItem('cartItems'));
-    if (orders) { orders.push(data); } else { orders = [data] }
+    let orders: Array<{
+      product: Product,
+      quant: number
+    }>;
+    if (localStorage.getItem('cartItems').length > 0) {
+      let added: boolean = false;
+      orders = JSON.parse(localStorage.getItem('cartItems'));
+      for(let i = 0; i<orders.length; i++) {
+        if(orders[i].product.id === data.product.id) {
+          console.log('igual')
+          if(orders[i].quant + data.quant <= orders[i].product.available) {
+            orders[i].quant += data.quant;
+          } else {
+            orders[i] = data;
+          }
+          added = true;
+        }
+      }
+      if(added === false) {
+        orders.push(data);
+        this.ordersCount++;
+      }
+    } else { 
+      orders = [data];
+      this.ordersCount++;
+    }
     console.log(orders);
     alert('Producto incluido satisfactoriamente');
     return localStorage.setItem('cartItems', JSON.stringify(orders));
@@ -448,6 +463,13 @@ export class ProductService {
     product: Product,
     quant: number
   }>> {
+    this.user.getOrders().subscribe(orders => {
+      this.ordersCount += orders.length;
+    });
     return this.user.getOrders();
+  }
+
+  getOrdersCount(): number {
+    return this.ordersCount;
   }
 }

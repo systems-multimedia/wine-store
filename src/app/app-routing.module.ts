@@ -20,8 +20,7 @@ const routes: Routes = [
       { path: 'products/:kind', component: ProductosComponent, data: { title: ':kind' } },
       { path: 'products/:kind/id/:id', component: ProductoComponent, data: { title: ':kind' } },
       { path: 'products/:range/search/:name', component: SearchComponent, data: { title: 'Búsqueda :name' } },
-      { path: 'my-profile', component: ProfileComponent, data: { title: 'Perfil' }, canActivate: [UserGuard] },
-      { path: 'my-profile/user/:id', component: ProfileComponent, data: { title: 'Perfil' } },
+      { path: 'my-profile/user/:id', component: ProfileComponent, data: { title: 'Perfil' }, canActivate: [UserGuard] },
     ]
   },
   { path: 'login', component: LoginComponent, data: { title: 'Inicio de Sesión' } },

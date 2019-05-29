@@ -5,14 +5,33 @@
       <label for="sort">Sort by</label>
       <input type="checkbox" name="sort" id="sort" class="block--invisible">
       <div id="_sort">
-        <label for="sort" class="sort_option"><li>Todo</li></label> 
-        <label for="sort" class="sort_option"><li>Embutidos</li></label> 
-        <label for="sort" class="sort_option"><li>Licores</li></label>
+        <label for="sort" class="sort_option">
+          <li>Todo</li>
+        </label>
+        <label for="sort" class="sort_option">
+          <li>Embutidos</li>
+        </label>
+        <label for="sort" class="sort_option">
+          <li>Licores</li>
+        </label>
       </div>
       <input type="text" name="search_term" placeholder="search" [(ngModel)]="search_term"
         (change)="search(search_term)">
     </div>
-    <div id="user"><a [routerLink]="user_url">Mi Cuenta</a></div>
+    <div id="user">
+      <a routerLink="/login" *ngIf="!auth.uid">Mi Cuenta</a>
+      <a [routerLink]="['/my-profile/user', auth.uid]" *ngIf="auth.uid">Mi Cuenta</a>
+    </div>
+    <div id="basket">
+      <a routerLink="/products/checkout"><i class="fa fa-shopping-basket"></i>
+        <div id="count">
+          <h5 *ngIf="orders < 10; else ninePlus">{{orders}}</h5>
+          <ng-template #ninePlus>
+            <h5>9+</h5>
+          </ng-template>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 <router-outlet></router-outlet>

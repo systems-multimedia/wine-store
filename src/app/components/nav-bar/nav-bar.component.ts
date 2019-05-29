@@ -15,10 +15,11 @@ export class NavBarComponent implements OnInit {
   sort = document.getElementsByClassName('sort_option');
   sort_term: string = 'Todo';
   user_url: string = 'my-profile';
+  orders: number;
   constructor(
     private productService: ProductService,
     private router: Router,
-    private auth: AuthService
+    public auth: AuthService
   ) {
   }
 
@@ -31,6 +32,8 @@ export class NavBarComponent implements OnInit {
         this.sort_term = this.sort[i].firstChild.textContent;
       })
     }
+
+    this.orders = this.productService.getOrdersCount();
   }
 
   search(term: any) {

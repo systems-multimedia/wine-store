@@ -35,14 +35,15 @@ export class AuthService {
     this.userService.getUsers().subscribe(users => {
       users.forEach(user => {
         if (data.email.toLowerCase() === user.email.toLowerCase() && data.password === user.password) {
-          return this.login().pipe(
-            finalize(() => {
-              this.uid = user.uid;
-              if (this.redirectUrl) {
-                this.router.navigate[this.redirectUrl];
-              }
-            })
-          ).subscribe();
+          this.uid = user.uid;
+          this.userService.setUID(user.uid);
+          if (this.redirectUrl) {
+            console.log('Logged In!')
+            this.router.navigate([this.redirectUrl]);
+          } else {
+            this.router.navigate(['home']);
+          }
+          return this.login();
         } else {
           return of(false);
         }
@@ -56,5 +57,7 @@ export class AuthService {
 
   logout(): void {
     this.isLoggedIn = false;
+    this.uid = '';
+    this.userService.setUID('');
   }
 }

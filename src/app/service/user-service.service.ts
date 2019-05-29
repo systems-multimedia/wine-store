@@ -89,7 +89,9 @@ export class UserService {
       return of(order);
     }
 
-    order = JSON.parse(localStorage.getItem('cartItems'));
+    if(localStorage.getItem('cartItems').length > 0) {
+      order = JSON.parse(localStorage.getItem('cartItems'));
+    }
     return of(order);
   }
 

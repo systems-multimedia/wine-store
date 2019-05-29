@@ -14,12 +14,24 @@ export class CheckoutComponent implements OnInit {
     product: Product,
     quant: number
   }>>;
+  addProduct: Array<true>;
   constructor(
     private product: ProductService
   ) { }
 
   ngOnInit() {
     this.orders = this.product.getOrders();
+    this.orders.subscribe(orders => {
+      if(orders) {
+        this.addProduct = new Array(orders.length);
+        for(let i = 0; i< this.addProduct.length; i++) {
+          this.addProduct[i] = true;
+        }
+      }
+    })
   }
 
+  checking(i) {
+    console.log(this.addProduct[i]);
+  }
 }

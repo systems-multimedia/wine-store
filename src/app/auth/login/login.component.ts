@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  email: string = '';
+  password: string = '';
+  constructor(
+    private auth: AuthService
+  ) { }
 
   ngOnInit() {
+  }
+
+  login({value, valid}: {value: {email: string, password: string}, valid: boolean}) {
+    if(!valid) {
+      alert('Información Errónea');
+    } else {
+      this.auth.checkLog(value);
+    }
   }
 
 }

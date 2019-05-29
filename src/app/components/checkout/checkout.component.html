@@ -1,39 +1,42 @@
 <section class="app">
   <section class="container">
     <table>
-      <tr>
-        <th>Producto</th>
-        <th>Status</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Agregar</th>
-        <th>Opciones</th>
+      <tr id="heading">
+        <th class="column-product">Producto</th>
+        <th class="column-status">Status</th>
+        <th class="column-price">Precio</th>
+        <th class="column-quant">Cantidad</th>
+        <th class="column-check">Agregar</th>
+        <th class="column-extra">Opciones</th>
       </tr>
-      <div id="list" *ngIf="orders | async as ordrs; else noOrders">
-        <tr *ngFor="let order of ordrs">
-          <td>
-            <div class="cover">
-              <img [src]="order.product.image" [alt]="order.product.name">
-              <h1>{{order.product.name}}</h1>
-            </div>
-          </td>
-          <td *ngIf="order.product.available > 0; else noDispon">Disponible</td>
-          <ng-template #noDispon>
-            <td>Agotado</td>
-          </ng-template>
-          <td>{{order.product.price - ((order.product.price*order.product.offer)/100) | async}}</td>
-          <td>{{order.quant}}</td>
-          <td>
-            <button type="button"></button>
-          </td>
-          <td>
-            <button type="button"><i class="fa fa-trash"></i></button>
-          </td>
-        </tr>
-      </div>
-      <ng-template #noOrders>
-        <tr>No hay productos añadidos</tr>
-      </ng-template>
+      <tr class="info" *ngFor="let order of orders | async; index as i">
+        <td class="column-product">
+          <div class="cover">
+            <img [src]="order.product.image" [alt]="order.product.name">
+          </div>
+          <h1><a [routerLink]="['/products', product.type, 'id', product.id]">
+            {{order.product.name}}
+          </a></h1>
+        </td>
+        <td *ngIf="order.product.available > 0; else noDispon" class="column-status"><h4 class="able-text">Disponible</h4></td>
+        <ng-template #noDispon>
+          <td class="column-status"><h4 class="non-able-text">Agotado</h4></td>
+        </ng-template>
+        <td class="column-price">
+          <h4>
+            {{order.product.price - ((order.product.price*order.product.offer)/100) | currency}}
+          </h4>
+        </td>
+        <td class="column-quant"><input type="number" name="quant" id="quant" [(ngModel)]="order.quant" min="0"
+            [max]="product.available"></td>
+        <td class="column-check">
+          <input type="checkbox" name="add" id="add" [(ngModel)]="addProduct[i]" (change)="checking(i)">
+        </td>
+        <td class="column-extra">
+          <button type="button"><i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
+      <tr *ngIf="!orders | async">No hay productos añadidos</tr>
     </table>
   </section>
 </section>
