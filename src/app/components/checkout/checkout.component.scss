@@ -38,6 +38,26 @@ table {
         min-height: 100px;
     }
 
+    tr#noProds {
+        width: 100%;
+    }
+
+    tr.total {
+        width: 100%;
+
+        td.total-text {
+            width: 75%;
+            text-align: center;
+            border: 0.5px solid rgba(0,0,0,0.15);
+        }
+        
+        td.total-amount {
+            width: 25%;
+            text-align: center;
+            border: 0.5px solid rgba(0,0,0,0.15);
+        }
+    }
+
     .column {
         &-product {
             width: 35%;
@@ -82,6 +102,10 @@ table {
                     margin: auto;
                     color: color(accent);
                 }
+
+                @media (max-width: 500px) {
+                    display: none;
+                }
             }
         }
 
@@ -107,6 +131,10 @@ table {
                 &.non-able-text {
                     color: red;
                 }
+            }
+
+            @media (max-width: 500px) {
+                display: none;
             }
         }
 
@@ -142,6 +170,10 @@ table {
                 color: gray;
                 cursor: pointer;
                 fill: none;
+            }
+
+            @media (max-width: 500px) {
+                display: none;
             }
         }
 

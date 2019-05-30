@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
 
   email: string = '';
   password: string = '';
+  dataError: boolean = false;
   constructor(
     private auth: AuthService
   ) { }
@@ -21,7 +22,9 @@ export class LoginComponent implements OnInit {
     if(!valid) {
       alert('Información Errónea');
     } else {
-      this.auth.checkLog(value);
+      this.auth.checkLog(value).subscribe(error => {
+        this.dataError = error;
+      })
     }
   }
 

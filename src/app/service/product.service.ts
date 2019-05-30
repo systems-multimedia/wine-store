@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Product } from '../model/product';
 import { Observable, of } from 'rxjs';
 import { UserService } from './user-service.service';
+import { User } from '../model/user';
 
 export interface SearchParam {
   lower_price?: number,
@@ -463,13 +464,51 @@ export class ProductService {
     product: Product,
     quant: number
   }>> {
-    this.user.getOrders().subscribe(orders => {
-      this.ordersCount += orders.length;
-    });
     return this.user.getOrders();
   }
 
   getOrdersCount(): number {
     return this.ordersCount;
+  }
+
+  deleteOrder(id: string): Observable<Array<{
+    product: Product,
+    quant: number
+  }>> {
+    let usr: User;
+    if(this.user.getUID()) {
+      this.user.getUsers().subscribe(users => {
+        if(users) {
+          let number: string = '';
+          this.user.getUID().split('u').forEach(char => {
+            number = number + char;
+          })
+          users[Number(number)-1].order.forEach(order => {
+            if(order && (order.product.id === id)) {
+              order = null;
+            }
+          })
+          usr = users[Number(number)-1];
+          localStorage.setItem('users', JSON.stringify(users))
+          return of(usr.order);
+        }
+      })
+    } else {
+      let array = JSON.parse(localStorage.getItem('cartItems')) as Array<{product: Product, quant: number}>;
+      for(let i = 0; i< array.length; i++) {
+        if(array[i].product.id == id) {
+          let temp = array[array.length - 1];
+          array[array.length - 1] = array[i];
+          array[i] = temp;
+          array.pop();
+        }
+      }
+      console.log(array as Array<{
+        product: Product,
+        quant: number
+      }>)
+      localStorage.setItem('cartItems', JSON.stringify(array));
+      return of(array);
+    }
   }
 }

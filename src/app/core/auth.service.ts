@@ -37,18 +37,13 @@ export class AuthService {
         if (data.email.toLowerCase() === user.email.toLowerCase() && data.password === user.password) {
           this.uid = user.uid;
           this.userService.setUID(user.uid);
-          if (this.redirectUrl) {
-            console.log('Logged In!')
-            this.router.navigate([this.redirectUrl]);
-          } else {
-            this.router.navigate(['home']);
-          }
+          this.router.navigate(['home']);
           return this.login();
         } else {
-          return of(false);
         }
       });
     });
+    return of(false);
   }
 
   signUp(data: User) {
@@ -59,5 +54,6 @@ export class AuthService {
     this.isLoggedIn = false;
     this.uid = '';
     this.userService.setUID('');
+    this.router.navigate(['/home']);
   }
 }

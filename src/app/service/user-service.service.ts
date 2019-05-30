@@ -29,13 +29,15 @@ export class UserService {
   private user: Observable<User>;
   private currentUid: string;
   constructor() {
-    if(!JSON.parse(localStorage.getItem('users'))) {
+    // localStorage.setItem('users', '');
+    if(!localStorage.getItem('users')) {
       localStorage.setItem('users', JSON.stringify(this.users));
     }
   }
 
   setUID(uid: string) {
     this.currentUid = uid;
+    console.log(this.currentUid);
   }
 
   getUID() {
@@ -66,9 +68,18 @@ export class UserService {
 
   addOrder(data: { product: Product, quant: number }) {
     this.getUser(this.currentUid).subscribe(user => {
-      user.order.push(data);
+      if(user.order) {
+        user.order.push(data);
+      } else {
+        user.order = [data];
+      }
       this.getUsers().subscribe(users => {
-        users[Number(user.uid.slice(1, user.uid.length - 1))] = user;
+        let number_id: string = '';
+        user.uid.split('u').forEach(char => {
+          number_id = number_id + char;
+        });
+        users[Number(number_id) - 1] = user;
+        console.log(Number(number_id));
         return localStorage.setItem('users', JSON.stringify(users));
       })
     })

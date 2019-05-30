@@ -15,6 +15,8 @@ export class CheckoutComponent implements OnInit {
     quant: number
   }>>;
   addProduct: Array<true>;
+  total: number = 0;
+  deals: number = 0;
   constructor(
     private product: ProductService
   ) { }
@@ -27,8 +29,36 @@ export class CheckoutComponent implements OnInit {
         for(let i = 0; i< this.addProduct.length; i++) {
           this.addProduct[i] = true;
         }
+        orders.forEach(order => {
+          if(order) {
+            this.total = this.total + ((order.product.price - ((order.product.price * order.product.offer)/100)) * order.quant);
+            this.deals = this.deals + (order.product.offer * order.quant);
+          }
+        })
       }
     })
+  }
+
+  calcTotal() {
+    this.total = 0;
+    this.deals = 0;
+    this.orders.subscribe(orders => {
+      if(orders) {
+        orders.forEach(order => {
+          if(order) {
+            this.total = this.total + ((order.product.price - ((order.product.price * order.product.offer)/100)) * order.quant);
+            this.deals = this.deals + (order.product.offer * order.quant);
+          }
+        })
+      }
+    })
+  }
+
+  delete(id: string) {
+    if(confirm('quiere eliminar este producto?')) {
+      this.orders = this.product.deleteOrder(id);
+      this.calcTotal();
+    }
   }
 
   checking(i) {

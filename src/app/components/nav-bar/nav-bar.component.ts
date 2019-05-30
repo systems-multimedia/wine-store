@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/service/product.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth.service';
+import { Observable } from 'rxjs';
+import { Product } from 'src/app/model/product';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,7 +17,10 @@ export class NavBarComponent implements OnInit {
   sort = document.getElementsByClassName('sort_option');
   sort_term: string = 'Todo';
   user_url: string = 'my-profile';
-  orders: number;
+  orders: Observable<Array<{
+    product: Product,
+    quant: number
+  }>>;
   constructor(
     private productService: ProductService,
     private router: Router,
@@ -33,7 +38,7 @@ export class NavBarComponent implements OnInit {
       })
     }
 
-    this.orders = this.productService.getOrdersCount();
+    this.orders = this.productService.getOrders();
   }
 
   search(term: any) {

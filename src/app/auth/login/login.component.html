@@ -6,6 +6,7 @@
     <div class="full-box">
       <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
         <div class="form-group">
+          <h3 class="error-message" *ngIf="dataError === true">Usuario o clave inválido</h3>
           <label>Email</label>
           <input type="text" name="email" id="email"
             pattern="[A-Za-z0-9._%+-]{2,}@[a-zA-Z]{1,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
