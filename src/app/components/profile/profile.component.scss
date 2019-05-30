@@ -1,0 +1,52 @@
+$color: (
+    darken: #222831,
+    dark: #393e46,
+    accent: #d65a31,
+    ligth: #eeeeee
+);
+
+@function color($map) {
+    @return map-get($map: $color, $key: $map);
+}
+
+.full-box {
+    height: calc(100vh - 170px);
+    * {
+        margin:auto;
+        color: color(ligth);
+    }
+
+    .info {
+        width: 75%;
+        max-width: 700px;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        height: 200px;
+        background: color(dark);
+        border-radius: 3px;
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+        * {
+            margin: auto;
+        }
+    }
+
+    #icon {
+        font-size: 35pt;
+    }
+    h1 {
+        text-transform: uppercase;
+        margin: 5px auto;
+    }
+    h3 {
+        font-weight: lighter;
+        text-transform: lowercase;
+        margin-bottom: 10px;
+    }
+    
+    h1,h2,h3 {
+        width: 100%;
+        text-align: center;
+    }
+}

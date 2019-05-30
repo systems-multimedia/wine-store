@@ -1,0 +1,201 @@
+$color: (
+    darken: #222831,
+    dark: #393e46,
+    accent: #d65a31,
+    ligth: #eeeeee
+);
+
+@function color($map) {
+    @return map-get($map: $color, $key: $map);
+}
+
+table {
+    width: 95%;
+    margin: auto;
+
+    tr#heading, tr.heading {
+        width: 100%;
+        height: 30px;
+        background: color(darken);
+        border: 0;
+        border-spacing: 0;
+        margin: 0;
+
+        th:nth-child(1) {
+            border-radius: 3px 0 0 3px;
+        }
+
+        th:nth-child(6) {
+            border-radius: 0 3px 3px 0;
+        }
+
+        * {
+            color: color(ligth);
+        }
+    }
+
+    tr.info {
+        min-height: 100px;
+    }
+
+    tr#noProds {
+        width: 100%;
+    }
+
+    tr.total {
+        width: 100%;
+
+        td.total-text {
+            width: 75%;
+            text-align: center;
+            border: 0.5px solid rgba(0,0,0,0.15);
+        }
+        
+        td.total-amount {
+            width: 25%;
+            text-align: center;
+            border: 0.5px solid rgba(0,0,0,0.15);
+        }
+    }
+
+    .column {
+        &-product {
+            width: 35%;
+            position: relative;
+            // display: flex;
+            * {
+                margin: auto;
+            }
+            .cover {
+                width: 100px;
+                display: block;
+                float: left;
+                height: 100px;
+                position: relative;
+                img {
+                    position: absolute;
+                    max-width: 100%;
+                    max-height: 100%;
+                    margin: auto;
+                    left: 0;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    vertical-align: baseline;
+                }
+            }
+
+            h1 {
+                width: calc(100% - 110px);
+                display: flex;
+                min-height: 100px;
+                line-break: loose;
+                margin-left: 8px;
+                font-size: 12pt;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                margin: auto;
+
+                a {
+                    margin: auto;
+                    color: color(accent);
+                }
+
+                @media (max-width: 500px) {
+                    display: none;
+                }
+            }
+        }
+
+        &-price {
+            width: 15%;
+        }
+
+        &-status, &-quant, &-check, &-extra {
+            width: 12.5%;
+        }
+
+        &-status {
+            h4 {
+                font-weight: lighter;
+                font-size: 11pt;
+                width: 100%;
+                text-align: center;
+
+                &.able-text {
+                    color: green;
+                }
+
+                &.non-able-text {
+                    color: red;
+                }
+            }
+
+            @media (max-width: 500px) {
+                display: none;
+            }
+        }
+
+        &-price {
+            h4 {
+                width: 100%;
+                text-align: center;
+                font-size: 12pt;
+                color: color(accent);
+            }
+        }
+
+        &-quant {
+            input {
+                width: 50%;
+                min-width: 10px;
+                display: block;
+                border: 0.5px solid rgba(0,0,0,0.15);
+                border-radius: 3px;
+                margin: auto;
+            }
+        }
+
+        &-check {
+            input {
+                width: 20%;
+                min-height: 30px;
+                height: auto;
+                margin: auto;
+                display: block;
+                background: none;
+                border: 0;
+                color: gray;
+                cursor: pointer;
+                fill: none;
+            }
+
+            @media (max-width: 500px) {
+                display: none;
+            }
+        }
+
+        &-extra {
+            button {
+                background: none;
+                margin: auto;
+                width: 50%;
+                min-width: 30px;
+                border: 0;
+                display: block;
+                font-size: 20pt;
+                color: rgb(214, 28, 28);
+                cursor: pointer;
+                transition: 0.3s;
+
+                &:hover {
+                    background: rgb(214, 28, 28);
+                    color: white;
+                    border-radius: 100%;
+                }
+            }
+        }
+    }
+}

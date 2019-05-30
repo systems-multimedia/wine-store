@@ -1,0 +1,12 @@
+<section class="app">
+  <section class="container">
+    <div class="full-box" *ngIf="user | async as usr">
+      <div class="info">
+        <h1 id="icon"><i class="fa fa-user"></i></h1>
+        <h1>{{usr.name}} {{usr.lname}}</h1>
+        <h3>{{usr.username}}</h3>
+        <h2><i class="fa fa-envelope"></i> {{usr.email}}</h2>
+      </div>
+    </div>
+  </section>
+</section>

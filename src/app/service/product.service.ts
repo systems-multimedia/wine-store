@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../model/product';
 import { Observable, of } from 'rxjs';
+import { UserService } from './user-service.service';
+import { User } from '../model/user';
 
 export interface SearchParam {
   lower_price?: number,
@@ -17,16 +19,6 @@ export interface SearchParam {
 
 export class ProductService {
 
-  // name: string,
-  //   type: string,
-  //   price: number,
-  //   available: number,
-  //   offer: number,
-  //   id: string | number,
-  //   image: string | string[],
-  //   tags: string | string[],
-  //   origin?: string,
-  //   quant?: number
   private products: Product[] = [
     {
       name: 'Aberlour Single Malt 12 Años',
@@ -257,9 +249,16 @@ export class ProductService {
     },
   ];
 
-  private search_Params: SearchParam
-
-  constructor() { }
+  private search_Params: SearchParam;
+  private ordersCount: number = 0;
+  constructor(
+    private user: UserService
+  ) {
+    // localStorage.setItem('cartItems', '');
+    if (!JSON.parse(localStorage.getItem('products'))) {
+      localStorage.setItem('products', JSON.stringify(this.products));
+    }
+  }
 
   getProduct(id: string): Observable<Product> {
     let product: Product;
@@ -272,14 +271,14 @@ export class ProductService {
   }
 
   getProducts(): Observable<Product[]> {
-    return of(this.products);
+    return of(JSON.parse(localStorage.getItem('products')));
   }
 
   getSection(section: string): Observable<Product[]> {
     let list: Product[] = [];
     this.getProducts().subscribe(products => {
       products.forEach(product => {
-        if(section.toLowerCase() === product.type.toLowerCase()) {
+        if (section.toLowerCase() === product.type.toLowerCase()) {
           list.push(product);
         }
       })
@@ -294,11 +293,11 @@ export class ProductService {
       products.forEach(product => {
         let count: number = 0;
         sections.forEach(section => {
-          if(section.toLowerCase() === product.type.toLowerCase()) {
+          if (section.toLowerCase() === product.type.toLowerCase()) {
             count++;
           }
         });
-        if(count === 0) {
+        if (count === 0) {
           sections.push(product.type.toLowerCase());
         }
       })
@@ -424,5 +423,92 @@ export class ProductService {
     })
 
     return of(list);
+  }
+
+  addToCart(data: { product: Product, quant: number }) {
+    if (this.user.getUID()) {
+      return this.user.addOrder(data);
+    }
+    let orders: Array<{
+      product: Product,
+      quant: number
+    }>;
+    if (localStorage.getItem('cartItems').length > 0) {
+      let added: boolean = false;
+      orders = JSON.parse(localStorage.getItem('cartItems'));
+      for(let i = 0; i<orders.length; i++) {
+        if(orders[i].product.id === data.product.id) {
+          console.log('igual')
+          if(orders[i].quant + data.quant <= orders[i].product.available) {
+            orders[i].quant += data.quant;
+          } else {
+            orders[i] = data;
+          }
+          added = true;
+        }
+      }
+      if(added === false) {
+        orders.push(data);
+        this.ordersCount++;
+      }
+    } else { 
+      orders = [data];
+      this.ordersCount++;
+    }
+    console.log(orders);
+    alert('Producto incluido satisfactoriamente');
+    return localStorage.setItem('cartItems', JSON.stringify(orders));
+  }
+
+  getOrders(): Observable<Array<{
+    product: Product,
+    quant: number
+  }>> {
+    return this.user.getOrders();
+  }
+
+  getOrdersCount(): number {
+    return this.ordersCount;
+  }
+
+  deleteOrder(id: string): Observable<Array<{
+    product: Product,
+    quant: number
+  }>> {
+    let usr: User;
+    if(this.user.getUID()) {
+      this.user.getUsers().subscribe(users => {
+        if(users) {
+          let number: string = '';
+          this.user.getUID().split('u').forEach(char => {
+            number = number + char;
+          })
+          users[Number(number)-1].order.forEach(order => {
+            if(order && (order.product.id === id)) {
+              order = null;
+            }
+          })
+          usr = users[Number(number)-1];
+          localStorage.setItem('users', JSON.stringify(users))
+          return of(usr.order);
+        }
+      })
+    } else {
+      let array = JSON.parse(localStorage.getItem('cartItems')) as Array<{product: Product, quant: number}>;
+      for(let i = 0; i< array.length; i++) {
+        if(array[i].product.id == id) {
+          let temp = array[array.length - 1];
+          array[array.length - 1] = array[i];
+          array[i] = temp;
+          array.pop();
+        }
+      }
+      console.log(array as Array<{
+        product: Product,
+        quant: number
+      }>)
+      localStorage.setItem('cartItems', JSON.stringify(array));
+      return of(array);
+    }
   }
 }

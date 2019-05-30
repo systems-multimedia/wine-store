@@ -1,0 +1,92 @@
+$color: (
+    darken: #222831,
+    dark: #393e46,
+    accent: #d65a31,
+    ligth: #eeeeee
+);
+
+@function color($map) {
+    @return map-get($map: $color, $key: $map);
+}
+
+.app {
+    background-image: url('../../../assets/pattern-about-shopping/495.jpg');
+    background-color: white;
+    background-size: 100%;
+}
+
+.full-box {
+    min-height: calc(100vh - 160px);
+}
+
+form {
+    width: 50%;
+    min-width: 300px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    min-height: 400px;
+    background: white;
+    border: 0.5px solid rgba(0,0,0,0.1);
+    border-radius: 3px;
+
+    label {
+        font-size: 20pt;
+        color: rgb(104, 104, 104);
+        text-align: center;
+        width: 90%;
+        display: block;
+        margin: 8px auto;
+    }
+
+    .form-group {
+        width: 80%;
+        margin: auto;
+
+        .form-control, .error-message {
+            width: 100%;
+        }
+    }
+    .form-control {
+        width: 80%;
+        height: 30pt;
+        display: block;
+        border-radius: 3px;
+        border: 0.5px solid rgba(0,0,0,0.1);
+        font-size: 20pt;
+        padding-left: 20px;
+        &-sm {
+            border: 0.5px solid rgb(255, 157, 157);
+            background: rgb(255, 219, 219);
+            outline: rgb(255, 157, 157);
+        }
+    }
+
+    .error-message {
+        color: rgb(255, 80, 80);
+        font-weight: lighter;
+        margin: 5px;
+        width: 80%;
+        font-size: 12pt;
+    }
+
+    .btn {
+        min-width: 30%;
+        padding: 0 5px;
+        height: 40px;
+        display: block;
+        border: 0;
+        background: rgb(139, 139, 139);
+        color: white;
+        font-size: 14pt;
+        border-radius: 3px;
+        cursor: pointer;
+        font-family: Arial, Helvetica, sans-serif;
+
+        &-block {
+            width: 80%;
+        }
+    }
+}

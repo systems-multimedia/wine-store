@@ -3,16 +3,37 @@
     <h1><a routerLink="/home">Store</a></h1>
     <div id="form-container">
       <label for="sort">Sort by</label>
+      <label  for="search_visible"><i class="fa fa-search"></i></label>
       <input type="checkbox" name="sort" id="sort" class="block--invisible">
       <div id="_sort">
-        <label for="sort" class="sort_option"><li>Todo</li></label> 
-        <label for="sort" class="sort_option"><li>Embutidos</li></label> 
-        <label for="sort" class="sort_option"><li>Licores</li></label>
+        <label for="sort" class="sort_option">
+          <li>Todo</li>
+        </label>
+        <label for="sort" class="sort_option">
+          <li>Embutidos</li>
+        </label>
+        <label for="sort" class="sort_option">
+          <li>Licores</li>
+        </label>
       </div>
-      <input type="text" name="search_term" placeholder="search" [(ngModel)]="search_term"
+      <input type="checkbox" name="search_visible" id="search_visible" class="block--invisible">
+      <input type="text" name="search_term" id="search_term" placeholder="search" [(ngModel)]="search_term"
         (change)="search(search_term)">
     </div>
-    <div id="user"><a routerLink="">Mi Cuenta</a></div>
+    <div id="user">
+      <a [routerLink]="['/my-profile/user', auth.uid]">Mi Cuenta</a>
+      <li id="logOut" (click)="auth.logout()" *ngIf="auth.uid">Cerrar Sesión</li>
+    </div>
+    <div id="basket">
+      <a routerLink="/products/checkout"><i class="fa fa-shopping-basket"></i>
+        <!-- <div id="count" *ngIf="orders | async as ordrs">
+          <h5 *ngIf="ordrs.length < 10; else ninePlus">{{ordrs.length}}</h5>
+          <ng-template #ninePlus>
+            <h5>9+</h5>
+          </ng-template>
+        </div> -->
+      </a>
+    </div>
   </div>
 </section>
 <router-outlet></router-outlet>

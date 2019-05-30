@@ -1,0 +1,56 @@
+<section class="app">
+  <section class="container">
+    <table>
+      <tr id="heading">
+        <th class="column-product">Producto</th>
+        <th class="column-status">Status</th>
+        <th class="column-price">Precio</th>
+        <th class="column-quant">Cantidad</th>
+        <th class="column-check">Agregar</th>
+        <th class="column-extra">Opciones</th>
+      </tr>
+      <tr class="info" *ngFor="let order of orders | async; index as i">
+        <td class="column-product" *ngIf="order">
+          <a class="cover" [routerLink]="['/products', product.type, 'id', product.id]">
+            <img [src]="order.product.image" [alt]="order.product.name">
+          </a>
+          <h1><a [routerLink]="['/products', product.type, 'id', product.id]">
+              {{order.product.name}}
+            </a></h1>
+        </td>
+        <td *ngIf="order && order.product.available > 0; else noDispon" class="column-status">
+          <h4 class="able-text">Disponible</h4>
+        </td>
+        <ng-template #noDispon>
+          <td class="column-status" *ngIf="order">
+            <h4 class="non-able-text">Agotado</h4>
+          </td>
+        </ng-template>
+        <td class="column-price" *ngIf="order">
+          <h4>
+            {{order.product.price - ((order.product.price*order.product.offer)/100) | currency}}
+          </h4>
+        </td>
+        <td class="column-quant" *ngIf="order"><input type="number" name="quant" id="quant" [(ngModel)]="order.quant" min="0"
+            [max]="product.available" (change)="calcTotal()"></td>
+        <td class="column-check" *ngIf="order">
+          <input type="checkbox" name="add" id="add" [(ngModel)]="addProduct[i]" (change)="checking(i)">
+        </td>
+        <td class="column-extra" *ngIf="order">
+          <button type="button" (click)="delete(order.product.id)"><i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
+      <tr *ngIf="!orders | async" id="noProds">No hay productos añadidos</tr>
+    </table>
+    <table>
+      <tr class="total">
+        <td class="total-text">Total</td>
+        <td class="total-amount">{{total | currency}}</td>
+      </tr>
+      <tr class="total">
+        <td class="total-text">Descuento</td>
+        <td class="total-amount">{{deals | currency}}</td>
+      </tr>
+    </table>
+  </section>
+</section>
